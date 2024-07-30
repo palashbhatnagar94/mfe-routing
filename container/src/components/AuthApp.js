@@ -1,11 +1,9 @@
 
-import { mount } from 'marketing/MarketingApp';
+import { mount } from 'auth/AuthApp';
 import React, { useRef, useEffect } from 'react';
 import { useHistory } from 'react-router-dom';
 
-console.log(mount)
-
-function MarketingApp() {
+function AuthApp({isSignedIn}) {
     const ref = useRef(null);
     const history = useHistory()
 
@@ -14,10 +12,14 @@ function MarketingApp() {
             initialPath: history.location.pathname,
             onNavigate: ({pathname: nextPathName}) => {
                 const {pathname} = history.location;
-                console.log('checkk child', nextPathName);
+                console.log('checkk Auth child', nextPathName);
                 if (pathname !== nextPathName) {
                     history.push(nextPathName);
                 }
+            },
+            onSignIn: () => {
+                console.log('Sign In')
+                isSignedIn()
             }
         })
         history.listen(onParentNavigate);
@@ -28,4 +30,4 @@ function MarketingApp() {
     )
 };
 
-export default MarketingApp
+export default AuthApp
